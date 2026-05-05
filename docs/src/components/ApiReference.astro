@@ -23,7 +23,7 @@
               <td><code>values</code></td>
               <td><code>number[]</code></td>
               <td><em>required</em></td>
-              <td>Array of values 0–100, max 20 items</td>
+              <td>Array of numbers, max 20 items. Values over 100 are auto-normalized (scaled so the max becomes 100)</td>
             </tr>
             <tr>
               <td><code>wdth</code></td>
@@ -71,7 +71,7 @@
               <td><code>values</code></td>
               <td><code>number[]</code></td>
               <td><em>required</em></td>
-              <td>Array of values 0–100, max 20 items</td>
+              <td>Array of numbers, max 20 items. Values over 100 are auto-normalized (scaled so the max becomes 100)</td>
             </tr>
             <tr>
               <td><code>wdth</code></td>
@@ -119,7 +119,7 @@
               <td><code>value</code></td>
               <td><code>number</code></td>
               <td><em>required</em></td>
-              <td>Single value 0–100 representing percentage</td>
+              <td>Single value 0–100 representing percentage. Values over 100 are clamped</td>
             </tr>
             <tr>
               <td><code>wdth</code></td>

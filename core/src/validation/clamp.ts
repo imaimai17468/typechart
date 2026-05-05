@@ -8,12 +8,15 @@ export const clampValue = (v: number): number => {
     return 0;
   }
   if (v > 100) {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn(`typechart: value ${v} is above 100, clamping to 100`);
-    }
     return 100;
   }
   return v;
+};
+
+export const normalizeValues = (values: number[]): number[] => {
+  const max = Math.max(...values);
+  if (max === 0) return values.map(() => 0);
+  return values.map((v) => Math.round((v / max) * 100));
 };
 
 export const clampValues = (values: number[]): number[] => {
@@ -23,5 +26,7 @@ export const clampValues = (values: number[]): number[] => {
     );
   }
   const trimmed = values.length > MAX_VALUES ? values.slice(0, MAX_VALUES) : values;
-  return trimmed.map(clampValue);
+  const needsNormalize = trimmed.some((v) => v > 100);
+  const scaled = needsNormalize ? normalizeValues(trimmed) : trimmed;
+  return scaled.map(clampValue);
 };
