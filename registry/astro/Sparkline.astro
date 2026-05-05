@@ -1,0 +1,24 @@
+---
+import { buildSparkline } from "@typechart/core";
+
+interface Props {
+  values: number[];
+  wdth?: number;
+  wght?: number;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const { values, wdth = 100, wght = 400, class: className, ariaLabel } = Astro.props;
+const syntax = buildSparkline(values);
+const variationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
+const label = ariaLabel ?? `Sparkline: ${values.join(", ")}`;
+const classes = className ? `typechart ${className}` : "typechart";
+---
+
+<span
+  class={classes}
+  style={`font-variation-settings: ${variationSettings}`}
+  role="img"
+  aria-label={label}
+>{syntax}</span>

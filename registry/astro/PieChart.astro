@@ -1,0 +1,24 @@
+---
+import { buildPie } from "@typechart/core";
+
+interface Props {
+  value: number;
+  wdth?: number;
+  wght?: number;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const { value, wdth = 100, wght = 400, class: className, ariaLabel } = Astro.props;
+const syntax = buildPie(value);
+const variationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
+const label = ariaLabel ?? `Pie chart: ${value}%`;
+const classes = className ? `typechart ${className}` : "typechart";
+---
+
+<span
+  class={classes}
+  style={`font-variation-settings: ${variationSettings}`}
+  role="img"
+  aria-label={label}
+>{syntax}</span>

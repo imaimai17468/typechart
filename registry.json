@@ -1,0 +1,157 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "typechart",
+  "homepage": "https://github.com/imaimai17468/typechart",
+  "items": [
+    {
+      "name": "bar-chart",
+      "type": "registry:component",
+      "title": "BarChart",
+      "description": "Inline bar chart powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/react/BarChart/BarChart.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "sparkline",
+      "type": "registry:component",
+      "title": "Sparkline",
+      "description": "Inline sparkline chart powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/react/Sparkline/Sparkline.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "pie-chart",
+      "type": "registry:component",
+      "title": "PieChart",
+      "description": "Inline pie chart powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/react/PieChart/PieChart.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "vue-bar-chart",
+      "type": "registry:component",
+      "title": "BarChart (Vue)",
+      "description": "Inline bar chart for Vue powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/vue/BarChart.vue", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "vue-sparkline",
+      "type": "registry:component",
+      "title": "Sparkline (Vue)",
+      "description": "Inline sparkline for Vue powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/vue/Sparkline.vue", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "vue-pie-chart",
+      "type": "registry:component",
+      "title": "PieChart (Vue)",
+      "description": "Inline pie chart for Vue powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/vue/PieChart.vue", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "svelte-bar-chart",
+      "type": "registry:component",
+      "title": "BarChart (Svelte)",
+      "description": "Inline bar chart for Svelte powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/svelte/BarChart.svelte", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "svelte-sparkline",
+      "type": "registry:component",
+      "title": "Sparkline (Svelte)",
+      "description": "Inline sparkline for Svelte powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/svelte/Sparkline.svelte", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "svelte-pie-chart",
+      "type": "registry:component",
+      "title": "PieChart (Svelte)",
+      "description": "Inline pie chart for Svelte powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/svelte/PieChart.svelte", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "solid-bar-chart",
+      "type": "registry:component",
+      "title": "BarChart (Solid)",
+      "description": "Inline bar chart for SolidJS powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/solid/BarChart.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "solid-sparkline",
+      "type": "registry:component",
+      "title": "Sparkline (Solid)",
+      "description": "Inline sparkline for SolidJS powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/solid/Sparkline.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "solid-pie-chart",
+      "type": "registry:component",
+      "title": "PieChart (Solid)",
+      "description": "Inline pie chart for SolidJS powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/solid/PieChart.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "astro-bar-chart",
+      "type": "registry:component",
+      "title": "BarChart (Astro)",
+      "description": "Inline bar chart for Astro powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/astro/BarChart.astro", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "astro-sparkline",
+      "type": "registry:component",
+      "title": "Sparkline (Astro)",
+      "description": "Inline sparkline for Astro powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/astro/Sparkline.astro", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "astro-pie-chart",
+      "type": "registry:component",
+      "title": "PieChart (Astro)",
+      "description": "Inline pie chart for Astro powered by the Datatype variable font.",
+      "dependencies": ["@typechart/core"],
+      "files": [
+        { "path": "registry/astro/PieChart.astro", "type": "registry:component" }
+      ]
+    }
+  ]
+}
