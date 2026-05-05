@@ -1,0 +1,5 @@
+{
+  "entry": ["core/src/index.ts", "scripts/build-registry.ts"],
+  "project": ["core/src/**/*.ts", "scripts/**/*.ts"],
+  "ignore": ["**/*.test.ts", "**/*.test.tsx"]
+}

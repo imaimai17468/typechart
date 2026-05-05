@@ -1,0 +1,32 @@
+{
+  "name": "typechart-registry",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run build:core && bun run build:registry",
+    "build:core": "cd core && tsup src/index.ts --outDir dist --format esm --dts --clean --tsconfig tsconfig.build.json",
+    "build:registry": "bun scripts/build-registry.ts",
+    "test": "bun test --preload ./setup-happy-dom.ts",
+    "typecheck": "bun run typecheck:core",
+    "typecheck:core": "tsc --project core/tsconfig.json --noEmit",
+    "lint": "oxlint .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "knip": "knip"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.2",
+    "@types/bun": "1.3.13",
+    "@types/node": "25.6.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "happy-dom": "20.9.0",
+    "knip": "6.11.0",
+    "oxlint": "1.62.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3"
+  },
+  "dependencies": {}
+}
