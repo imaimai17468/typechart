@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "registry/**"
+      - "registry.json"
+      - "scripts/**"
   workflow_dispatch:
 
 permissions:
@@ -27,8 +30,11 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: latest
+      - run: bun install --frozen-lockfile --ignore-scripts
+      - run: bun run build:registry
       - run: cd docs && bun install --frozen-lockfile --ignore-scripts
       - run: cd docs && bun run build
+      - run: cp -r public/r docs/dist/r
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: docs/dist
