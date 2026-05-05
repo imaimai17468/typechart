@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "typechart — Inline charts powered by a variable font",
+  description = "Lightweight chart library that renders bar charts, sparklines, and pie charts via the Datatype variable font. No SVG. No Canvas. No JS runtime.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/typechart/favicon.svg" />
+    <link rel="icon" href="/typechart/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <nav>
+      <div class="container nav-inner">
+        <span class="nav-logo">typechart</span>
+        <div class="nav-links">
+          <a href="#demos" class="hide-mobile">Demos</a>
+          <a href="#install" class="hide-mobile">Install</a>
+          <a href="#api" class="hide-mobile">API</a>
+          <a href="https://github.com/imaimai17468/typechart" target="_blank" rel="noopener" class="hide-mobile">GitHub</a>
+          <ThemeToggle />
+        </div>
+      </div>
+    </nav>
+    <slot />
+    <script>
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = saved ?? (prefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+---
+import { Sun, Moon } from "lucide-astro";
+---
+
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+  <span id="theme-icon-sun" class="theme-icon"><Sun size={18} /></span>
+  <span id="theme-icon-moon" class="theme-icon" style="display:none"><Moon size={18} /></span>
+</button>
+
+<script>
+  function initTheme() {
+    const btn = document.getElementById("theme-toggle");
+    const sun = document.getElementById("theme-icon-sun");
+    const moon = document.getElementById("theme-icon-moon");
+    if (!btn || !sun || !moon) return;
+
+    const update = (theme: string) => {
+      sun.style.display = theme === "dark" ? "flex" : "none";
+      moon.style.display = theme === "dark" ? "none" : "flex";
+    };
+
+    update(document.documentElement.getAttribute("data-theme") ?? "dark");
+
+    btn.addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      update(next);
+    });
+  }
+
+  initTheme();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .theme-toggle:hover {
+    background: var(--border);
+  }
+
+  .theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,226 @@
+---
+---
+
+<section id="examples" class="examples">
+  <div class="container">
+    <h2>Usage Examples</h2>
+    <p class="section-subtitle">Inline charts shine where full charting libraries are overkill. Here are real-world patterns.</p>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <h3>Data Table with Sparklines</h3>
+        <p class="example-desc">Add a trend column to any table — no extra layout work.</p>
+        <div class="example-preview">
+          <table class="example-table">
+            <thead>
+              <tr>
+                <th>Page</th>
+                <th>Views</th>
+                <th>Trend (7d)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>/home</td>
+                <td>12,450</td>
+                <td><span class="chart-font table-chart" style="font-variation-settings: 'wdth' 70, 'wght' 400">{`{l:40,55,50,65,60,80,75}`}</span></td>
+              </tr>
+              <tr>
+                <td>/pricing</td>
+                <td>8,320</td>
+                <td><span class="chart-font table-chart" style="font-variation-settings: 'wdth' 70, 'wght' 400">{`{l:70,65,55,50,45,40,30}`}</span></td>
+              </tr>
+              <tr>
+                <td>/docs</td>
+                <td>6,180</td>
+                <td><span class="chart-font table-chart" style="font-variation-settings: 'wdth' 70, 'wght' 400">{`{l:30,35,40,38,42,45,50}`}</span></td>
+              </tr>
+              <tr>
+                <td>/blog</td>
+                <td>3,940</td>
+                <td><span class="chart-font table-chart" style="font-variation-settings: 'wdth' 70, 'wght' 400">{`{l:50,48,52,55,50,53,51}`}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3>KPI Cards</h3>
+        <p class="example-desc">Pair a metric with a mini chart inside a compact card.</p>
+        <div class="example-preview">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-label">Revenue</span>
+              <span class="kpi-value">$48.2K</span>
+              <span class="chart-font kpi-chart" style="font-variation-settings: 'wdth' 80, 'wght' 300">{`{b:35,45,40,55,65,60,80}`}</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label">Conversion</span>
+              <span class="kpi-value">3.2%</span>
+              <span class="chart-font kpi-chart" style="font-variation-settings: 'wdth' 100, 'wght' 400">{`{p:32}`}</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label">Sessions</span>
+              <span class="kpi-value">24.1K</span>
+              <span class="chart-font kpi-chart" style="font-variation-settings: 'wdth' 80, 'wght' 300">{`{l:20,30,25,40,55,50,70}`}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <h3>Inline Stats in Text</h3>
+        <p class="example-desc">Embed charts directly in paragraphs or labels — they're just text.</p>
+        <div class="example-preview">
+          <div class="inline-example">
+            <p class="inline-text">
+              CPU usage over the last hour
+              <span class="chart-font inline-chart" style="font-variation-settings: 'wdth' 60, 'wght' 300">{`{l:20,25,30,28,45,60,55,70,65,50}`}</span>
+              peaked at 70% and is now trending down.
+            </p>
+            <p class="inline-text">
+              Deploy success rate is at
+              <span class="chart-font inline-chart" style="font-variation-settings: 'wdth' 100, 'wght' 400">{`{p:94}`}</span>
+              94% this week — up from 87% last week.
+            </p>
+            <p class="inline-text">
+              Storage breakdown by team:
+              <span class="chart-font inline-chart" style="font-variation-settings: 'wdth' 80, 'wght' 400">{`{b:80,45,30,20}`}</span>
+              Frontend leads at 80%.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .examples {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .example-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .example-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .example-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .example-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .example-preview {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  /* Data Table */
+  .example-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .example-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+
+  .example-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .example-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .table-chart {
+    font-size: 1.5rem;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .kpi-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .kpi-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .kpi-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .kpi-chart {
+    font-size: 1.75rem;
+    line-height: 1;
+    margin-top: 0.25rem;
+  }
+
+  /* Inline Stats */
+  .inline-example {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .inline-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  .inline-chart {
+    font-size: 1.25rem;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 640px) {
+    .kpi-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

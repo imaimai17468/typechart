@@ -1,0 +1,313 @@
+---
+interface Props {
+  chartType: "bar" | "sparkline" | "pie";
+}
+
+const { chartType } = Astro.props;
+
+const typeLabel = chartType === "bar" ? "Bar Chart" : chartType === "sparkline" ? "Sparkline" : "Pie Chart";
+const prefix = chartType === "bar" ? "b" : chartType === "sparkline" ? "l" : "p";
+const initialValues = chartType === "pie" ? [65] : [30, 70, 50, 40];
+const initialSyntax =
+  chartType === "pie"
+    ? `{p:65}`
+    : chartType === "bar"
+    ? `{b:30,70,50,40}`
+    : `{l:30,70,50,40}`;
+---
+
+<div class="demo-card" data-chart-type={chartType} data-prefix={prefix}>
+  <div class="demo-card-header">
+    <h3>{typeLabel}</h3>
+    <code class="syntax-readout" data-role="syntax">{initialSyntax}</code>
+  </div>
+
+  <div class="demo-card-body">
+    <div class="chart-preview-area">
+      <div
+        class="chart-font chart-display"
+        data-role="chart-display"
+        style={`font-variation-settings: "wdth" 100, "wght" 400`}
+        aria-label={`${typeLabel} demo`}
+      >
+        {initialSyntax}
+      </div>
+    </div>
+
+    <div class="controls-area">
+      {chartType !== "pie" && (
+        <div class="values-section">
+          <div class="controls-label-row">
+            <span class="controls-label">Values</span>
+            <div class="add-remove-btns">
+              <button class="btn small-btn" data-role="add-value" aria-label="Add value">+ Add</button>
+              <button class="btn small-btn" data-role="remove-value" aria-label="Remove value">− Remove</button>
+            </div>
+          </div>
+          <div class="sliders-list" data-role="sliders-list">
+            {initialValues.map((v, i) => (
+              <div class="slider-row" data-index={i}>
+                <label>v{i + 1}: <span class="slider-val">{v}</span></label>
+                <input type="range" min="0" max="100" value={v} data-role="value-slider" data-index={i} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {chartType === "pie" && (
+        <div class="values-section">
+          <div class="slider-row">
+            <label>Value: <span class="slider-val">65</span></label>
+            <input type="range" min="0" max="100" value="65" data-role="pie-slider" />
+          </div>
+        </div>
+      )}
+
+      <div class="axis-section">
+        <div class="controls-label">Font Axes</div>
+        <div class="slider-row">
+          <label>wdth (width): <span class="slider-val">100</span></label>
+          <input type="range" min="50" max="150" value="100" data-role="wdth-slider" />
+        </div>
+        <div class="slider-row">
+          <label>wght (weight): <span class="slider-val">400</span></label>
+          <input type="range" min="100" max="900" value="400" data-role="wght-slider" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+  const r = Math.round;
+
+  const buildBar = (values: number[]) =>
+    `{b:${values.map(v => r(clamp(v, 0, 100))).join(",")}}`;
+  const buildSparkline = (values: number[]) =>
+    `{l:${values.map(v => r(clamp(v, 0, 100))).join(",")}}`;
+  const buildPie = (value: number) =>
+    `{p:${r(clamp(value, 0, 100))}}`;
+
+  const buildSyntax = (type: string, values: number[]) => {
+    if (type === "bar") return buildBar(values);
+    if (type === "sparkline") return buildSparkline(values);
+    return buildPie(values[0]);
+  };
+
+  document.querySelectorAll<HTMLElement>(".demo-card").forEach((card) => {
+    const chartType = card.dataset.chartType ?? "bar";
+    const chartDisplay = card.querySelector<HTMLElement>("[data-role='chart-display']");
+    const syntaxReadout = card.querySelector<HTMLElement>("[data-role='syntax']");
+
+    let values: number[] = chartType === "pie" ? [65] : [30, 70, 50, 40];
+    let wdth = 100;
+    let wght = 400;
+
+    const rerender = () => {
+      const syntax = buildSyntax(chartType, values);
+      if (chartDisplay) {
+        chartDisplay.textContent = syntax;
+        chartDisplay.style.fontVariationSettings = `"wdth" ${wdth}, "wght" ${wght}`;
+      }
+      if (syntaxReadout) syntaxReadout.textContent = syntax;
+    };
+
+    const rebuildSlidersList = () => {
+      const list = card.querySelector<HTMLElement>("[data-role='sliders-list']");
+      if (!list) return;
+      list.innerHTML = values
+        .map(
+          (v, i) =>
+            `<div class="slider-row" data-index="${i}">
+              <label>v${i + 1}: <span class="slider-val">${v}</span></label>
+              <input type="range" min="0" max="100" value="${v}" data-role="value-slider" data-index="${i}" />
+            </div>`
+        )
+        .join("");
+      attachSliderEvents();
+    };
+
+    const attachSliderEvents = () => {
+      card.querySelectorAll<HTMLInputElement>("[data-role='value-slider']").forEach((slider) => {
+        slider.addEventListener("input", () => {
+          const idx = Number(slider.dataset.index);
+          values[idx] = Number(slider.value);
+          const valSpan = slider.closest(".slider-row")?.querySelector(".slider-val");
+          if (valSpan) valSpan.textContent = slider.value;
+          rerender();
+        });
+      });
+    };
+
+    attachSliderEvents();
+
+    const pieSlider = card.querySelector<HTMLInputElement>("[data-role='pie-slider']");
+    pieSlider?.addEventListener("input", () => {
+      values[0] = Number(pieSlider.value);
+      const valSpan = pieSlider.closest(".slider-row")?.querySelector(".slider-val");
+      if (valSpan) valSpan.textContent = pieSlider.value;
+      rerender();
+    });
+
+    const wdthSlider = card.querySelector<HTMLInputElement>("[data-role='wdth-slider']");
+    wdthSlider?.addEventListener("input", () => {
+      wdth = Number(wdthSlider.value);
+      const valSpan = wdthSlider.closest(".slider-row")?.querySelector(".slider-val");
+      if (valSpan) valSpan.textContent = wdthSlider.value;
+      rerender();
+    });
+
+    const wghtSlider = card.querySelector<HTMLInputElement>("[data-role='wght-slider']");
+    wghtSlider?.addEventListener("input", () => {
+      wght = Number(wghtSlider.value);
+      const valSpan = wghtSlider.closest(".slider-row")?.querySelector(".slider-val");
+      if (valSpan) valSpan.textContent = wghtSlider.value;
+      rerender();
+    });
+
+    card.querySelector("[data-role='add-value']")?.addEventListener("click", () => {
+      if (values.length >= 20) return;
+      values = [...values, 50];
+      rebuildSlidersList();
+      rerender();
+    });
+
+    card.querySelector("[data-role='remove-value']")?.addEventListener("click", () => {
+      if (values.length <= 1) return;
+      values = values.slice(0, -1);
+      rebuildSlidersList();
+      rerender();
+    });
+
+    rerender();
+  });
+</script>
+
+<style>
+  .demo-card {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .demo-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .syntax-readout {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) / 2);
+    padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 16rem;
+  }
+
+  .demo-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .chart-preview-area {
+    border-right: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background: var(--bg);
+  }
+
+  .chart-display {
+    font-size: 3rem;
+    line-height: 1;
+    word-break: break-all;
+    text-align: center;
+    transition: font-variation-settings 0.2s ease;
+    max-width: 100%;
+  }
+
+  .controls-area {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .values-section,
+  .axis-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .controls-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .controls-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sliders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .add-remove-btns {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .small-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  @media (max-width: 640px) {
+    .demo-card-body {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-preview-area {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      min-height: 140px;
+    }
+
+    .chart-display {
+      font-size: 2rem;
+    }
+
+    .controls-area {
+      max-height: none;
+    }
+  }
+</style>

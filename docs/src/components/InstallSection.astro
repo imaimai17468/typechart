@@ -1,0 +1,267 @@
+---
+const frameworks = [
+  { id: "react", label: "React" },
+  { id: "vue", label: "Vue" },
+  { id: "svelte", label: "Svelte" },
+  { id: "solid", label: "Solid" },
+  { id: "astro", label: "Astro" },
+];
+
+const installCmds: Record<string, { bar: string; sparkline: string; pie: string }> = {
+  react: {
+    bar: "npx shadcn@latest add https://typechart.pages.dev/r/bar-chart.json",
+    sparkline: "npx shadcn@latest add https://typechart.pages.dev/r/sparkline.json",
+    pie: "npx shadcn@latest add https://typechart.pages.dev/r/pie-chart.json",
+  },
+  vue: {
+    bar: "npx shadcn@latest add https://typechart.pages.dev/r/vue-bar-chart.json",
+    sparkline: "npx shadcn@latest add https://typechart.pages.dev/r/vue-sparkline.json",
+    pie: "npx shadcn@latest add https://typechart.pages.dev/r/vue-pie-chart.json",
+  },
+  svelte: {
+    bar: "npx shadcn@latest add https://typechart.pages.dev/r/svelte-bar-chart.json",
+    sparkline: "npx shadcn@latest add https://typechart.pages.dev/r/svelte-sparkline.json",
+    pie: "npx shadcn@latest add https://typechart.pages.dev/r/svelte-pie-chart.json",
+  },
+  solid: {
+    bar: "npx shadcn@latest add https://typechart.pages.dev/r/solid-bar-chart.json",
+    sparkline: "npx shadcn@latest add https://typechart.pages.dev/r/solid-sparkline.json",
+    pie: "npx shadcn@latest add https://typechart.pages.dev/r/solid-pie-chart.json",
+  },
+  astro: {
+    bar: "npx shadcn@latest add https://typechart.pages.dev/r/astro-bar-chart.json",
+    sparkline: "npx shadcn@latest add https://typechart.pages.dev/r/astro-sparkline.json",
+    pie: "npx shadcn@latest add https://typechart.pages.dev/r/astro-pie-chart.json",
+  },
+};
+
+const usageExamples: Record<string, string> = {
+  react: `import { BarChart, Sparkline, PieChart } from "@/components/typechart";
+
+export function Dashboard() {
+  return (
+    <div>
+      <BarChart values={[30, 70, 50, 40, 80]} />
+      <Sparkline values={[20, 55, 35, 75, 50]} wdth={120} />
+      <PieChart value={65} wght={700} />
+    </div>
+  );
+}`,
+  vue: `<script setup>
+import { BarChart, Sparkline, PieChart } from "@/components/typechart";
+<\/script>
+
+<template>
+  <div>
+    <BarChart :values="[30, 70, 50, 40, 80]" />
+    <Sparkline :values="[20, 55, 35, 75, 50]" :wdth="120" />
+    <PieChart :value="65" :wght="700" />
+  </div>
+</template>`,
+  svelte: `<script>
+  import { BarChart, Sparkline, PieChart } from "$lib/components/typechart";
+<\/script>
+
+<BarChart values={[30, 70, 50, 40, 80]} />
+<Sparkline values={[20, 55, 35, 75, 50]} wdth={120} />
+<PieChart value={65} wght={700} />`,
+  solid: `import { BarChart, Sparkline, PieChart } from "~/components/typechart";
+
+export function Dashboard() {
+  return (
+    <div>
+      <BarChart values={[30, 70, 50, 40, 80]} />
+      <Sparkline values={[20, 55, 35, 75, 50]} wdth={120} />
+      <PieChart value={65} wght={700} />
+    </div>
+  );
+}`,
+  astro: `---
+import { BarChart, Sparkline, PieChart } from "../components/typechart";
+---
+
+<BarChart values={[30, 70, 50, 40, 80]} />
+<Sparkline values={[20, 55, 35, 75, 50]} wdth={120} />
+<PieChart value={65} wght={700} />`,
+};
+---
+
+<section id="install">
+  <div class="container">
+    <h2>Install & Usage</h2>
+    <p class="section-subtitle">
+      Add typechart components via the shadcn CLI. Pick your framework below.
+    </p>
+
+    <div class="tabs-container">
+      <div class="tab-list" role="tablist" aria-label="Framework">
+        {frameworks.map((fw, i) => (
+          <button
+            role="tab"
+            class={`tab-btn${i === 0 ? " active" : ""}`}
+            data-tab={fw.id}
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls={`panel-${fw.id}`}
+            id={`tab-${fw.id}`}
+          >
+            {fw.label}
+          </button>
+        ))}
+      </div>
+
+      {frameworks.map((fw, i) => (
+        <div
+          role="tabpanel"
+          id={`panel-${fw.id}`}
+          aria-labelledby={`tab-${fw.id}`}
+          class={`tab-panel${i === 0 ? " active" : ""}`}
+          data-panel={fw.id}
+        >
+          <div class="install-steps">
+            <div class="step">
+              <div class="step-label">1. Install components</div>
+              <div class="install-commands">
+                <div class="cmd-row">
+                  <span class="cmd-badge">BarChart</span>
+                  <code class="code-block">{installCmds[fw.id].bar}</code>
+                </div>
+                <div class="cmd-row">
+                  <span class="cmd-badge">Sparkline</span>
+                  <code class="code-block">{installCmds[fw.id].sparkline}</code>
+                </div>
+                <div class="cmd-row">
+                  <span class="cmd-badge">PieChart</span>
+                  <code class="code-block">{installCmds[fw.id].pie}</code>
+                </div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-label">2. Use in your project</div>
+              <pre class="code-block usage-code">{usageExamples[fw.id]}</pre>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabBtns = document.querySelectorAll<HTMLElement>(".tab-btn");
+  const tabPanels = document.querySelectorAll<HTMLElement>(".tab-panel");
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.tab;
+
+      tabBtns.forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
+      tabPanels.forEach((p) => p.classList.remove("active"));
+
+      btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      document.querySelector(`[data-panel="${target}"]`)?.classList.add("active");
+    });
+  });
+</script>
+
+<style>
+  .tabs-container {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .tab-list {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-subtle);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+  }
+
+  .tab-btn.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  .tab-panel {
+    display: none;
+    padding: 2rem;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  .install-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .step-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .install-commands {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cmd-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .cmd-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) / 2);
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-top: 0.85rem;
+    font-family: "SF Mono", "Fira Code", monospace;
+    flex-shrink: 0;
+  }
+
+  .cmd-row .code-block {
+    flex: 1;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .usage-code {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+</style>

@@ -1,0 +1,346 @@
+---
+---
+
+<section id="how-it-works" class="how-it-works">
+  <div class="container">
+    <h2>How It Works</h2>
+    <p class="section-desc">typechart uses the <strong>Datatype</strong> variable font to render charts. No SVG, no Canvas, no charting library — just text and a font.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-number">1</span>
+        <div class="step-content">
+          <h3>Write a text string</h3>
+          <p>Chart data is encoded as a simple text syntax. For example, a bar chart with values 30, 70, 50 is written as:</p>
+          <code class="syntax-example">{`{b:30,70,50}`}</code>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <div class="step-content">
+          <h3>Apply the Datatype font</h3>
+          <p>The Datatype font contains OpenType ligature rules that detect chart patterns. When <code>font-feature-settings: 'liga' 1, 'calt' 1</code> is enabled, the font substitutes the text with chart glyphs.</p>
+          <code class="syntax-example">{`.typechart { font-family: 'Datatype'; }`}</code>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <div class="step-content">
+          <h3>Tune with variable font axes</h3>
+          <p>The font has two axes: <strong>wdth</strong> (50–150) controls spacing, <strong>wght</strong> (100–900) controls thickness. Adjust them via CSS <code>font-variation-settings</code>.</p>
+          <div class="axis-demo">
+            <span class="chart-font axis-preview" id="axis-demo-chart">{`{b:30,60,80,45,70}`}</span>
+            <div class="axis-controls">
+              <label>
+                <span>wdth: <strong id="axis-wdth-val">100</strong></span>
+                <input type="range" id="axis-wdth" min="50" max="150" value="100" />
+              </label>
+              <label>
+                <span>wght: <strong id="axis-wght-val">400</strong></span>
+                <input type="range" id="axis-wght" min="100" max="900" value="400" step="100" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-components">
+      <h2>Why Components?</h2>
+      <p class="section-desc">The font alone works great — but raw font syntax in production code has rough edges. typechart wraps it in framework-native components so you don't have to.</p>
+      <div class="benefits">
+        <div class="benefit">
+          <h3>Accessibility built in</h3>
+          <p>Every chart renders with <code>role="img"</code> and an auto-generated <code>aria-label</code>. Screen readers announce "Bar chart: 30, 70, 50" instead of seeing cryptic font syntax.</p>
+        </div>
+        <div class="benefit">
+          <h3>Input validation</h3>
+          <p>Values are clamped to 0–100 and arrays are trimmed to 20 items automatically. Out-of-range data won't silently produce broken glyphs — you get a console warning in dev.</p>
+        </div>
+        <div class="benefit">
+          <h3>Type-safe props</h3>
+          <p>Pass <code>values</code>, <code>wdth</code>, <code>wght</code> as typed props instead of hand-assembling <code>{`{b:30,70,50}`}</code> strings and <code>font-variation-settings</code> CSS.</p>
+        </div>
+        <div class="benefit">
+          <h3>Framework-native DX</h3>
+          <p>Install via shadcn CLI for React, Vue, Svelte, Solid, or Astro. Each wrapper is a single file — copy-paste friendly, zero runtime dependencies beyond the font.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="powered-by">
+      <p class="powered-heading">Powered by Datatype</p>
+      <p class="powered-description">typechart is built on top of the <strong>Datatype</strong> variable font by <strong>Frank Tisellano</strong>. Licensed under the SIL Open Font License.</p>
+      <div class="powered-links">
+        <a href="https://github.com/franktisellano/datatype" target="_blank" rel="noopener">Datatype on GitHub</a>
+        <a href="https://franktisellano.github.io/datatype/" target="_blank" rel="noopener">Official Site</a>
+        <a href="https://x.com/franktisellano" target="_blank" rel="noopener">X (@franktisellano)</a>
+        <a href="https://github.com/franktisellano" target="_blank" rel="noopener">GitHub (@franktisellano)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initAxisDemo() {
+    const chart = document.getElementById("axis-demo-chart");
+    const wdthSlider = document.getElementById("axis-wdth") as HTMLInputElement | null;
+    const wghtSlider = document.getElementById("axis-wght") as HTMLInputElement | null;
+    const wdthVal = document.getElementById("axis-wdth-val");
+    const wghtVal = document.getElementById("axis-wght-val");
+    if (!chart || !wdthSlider || !wghtSlider || !wdthVal || !wghtVal) return;
+
+    const update = () => {
+      chart.style.fontVariationSettings = `'wdth' ${wdthSlider.value}, 'wght' ${wghtSlider.value}`;
+      wdthVal.textContent = wdthSlider.value;
+      wghtVal.textContent = wghtSlider.value;
+    };
+
+    wdthSlider.addEventListener("input", update);
+    wghtSlider.addEventListener("input", update);
+  }
+
+  initAxisDemo();
+</script>
+
+<style>
+  .how-it-works {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .how-it-works h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 640px;
+  }
+
+  .section-desc strong {
+    color: var(--text);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-content p {
+    color: var(--text-muted);
+    font-size: 0.925rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-content p code {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  .step-content p strong {
+    color: var(--text);
+  }
+
+  .syntax-example {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: var(--radius);
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+  .axis-demo {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    flex-wrap: wrap;
+  }
+
+  .axis-preview {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .axis-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .axis-controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .axis-controls label strong {
+    color: var(--text);
+  }
+
+  .axis-controls input[type="range"] {
+    width: 100%;
+  }
+
+  .why-components {
+    margin-top: 4rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .why-components h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .benefit {
+    padding: 1.25rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .benefit h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .benefit p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .benefit p code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  .benefit p strong {
+    color: var(--text);
+  }
+
+  .powered-by {
+    margin-top: 4rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-subtle);
+  }
+
+  .powered-heading {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .powered-description {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .powered-description strong {
+    color: var(--text);
+  }
+
+  .powered-links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .powered-links a {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+  }
+
+  .powered-links a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 640px) {
+    .step {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .axis-demo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .benefits {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

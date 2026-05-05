@@ -1,0 +1,26 @@
+---
+import DemoCard from "./DemoCard.astro";
+---
+
+<section id="demos">
+  <div class="container">
+    <h2>Live Demos</h2>
+    <p class="section-subtitle">
+      Adjust sliders to see charts update in real time. Charts are rendered entirely with the Datatype variable font.
+    </p>
+
+    <div class="demo-grid">
+      <DemoCard chartType="bar" />
+      <DemoCard chartType="sparkline" />
+      <DemoCard chartType="pie" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .demo-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>
