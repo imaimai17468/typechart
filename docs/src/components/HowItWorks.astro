@@ -57,7 +57,7 @@
         </div>
         <div class="benefit">
           <h3>Input validation</h3>
-          <p>Values are clamped to 0–100 and arrays are trimmed to 20 items automatically. Out-of-range data won't silently produce broken glyphs — you get a console warning in dev.</p>
+          <p>Values over 100 are auto-normalized (scaled so the max becomes 100). Negative values are clamped to 0, and arrays are trimmed to 20 items. You can pass raw data like <code>[1200, 3400, 800]</code> directly.</p>
         </div>
         <div class="benefit">
           <h3>Type-safe props</h3>
